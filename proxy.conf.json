@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://isuper.reviewcenterphil.com/api",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

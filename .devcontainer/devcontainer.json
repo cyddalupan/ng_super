@@ -1,0 +1,10 @@
+{
+  "name": "Node 16 for Angular 13/Ionic",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:16",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "16"
+    }
+  },
+  "postCreateCommand": "nvm install 16.20.2 && nvm use 16.20.2 && npm install -g @angular/cli@13.3.11 @ionic/cli@6.20.9"
+}

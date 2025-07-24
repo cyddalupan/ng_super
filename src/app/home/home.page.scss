@@ -1,27 +1,18 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+.logo {
+  display: block;
+  margin: 40px auto 32px auto; /* Centered with spacing */
+  width: 100%; /* Full width for life and responsiveness */
+  max-width: 250px; /* Cap for larger screens to keep balanced */
+  height: auto;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.loading-spinner {
+  margin-right: 12px; /* Space from text */
+  --color: #ffffff; /* White for contrast on button blue */
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+ion-button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center spinner and text during load */
 }

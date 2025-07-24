@@ -1,20 +1,28 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>iweb</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <img src="assets/logo.png" alt="iweb Logo" class="logo animate__animated animate__fadeInDown" />
+    <ion-item>
+      <ion-icon name="person" slot="start" class="fa fa-user"></ion-icon>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input [(ngModel)]="credentials.username" placeholder="Enter username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="lock-closed" slot="start" class="fa fa-lock"></ion-icon>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" [(ngModel)]="credentials.password" placeholder="Enter password"></ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="login()">
+      <ion-spinner *ngIf="isLoading" name="crescent" class="loading-spinner"></ion-spinner>
+      <ion-icon name="log-in-outline" slot="start" class="fa fa-sign-in-alt" *ngIf="!isLoading"></ion-icon>
+      <span *ngIf="!isLoading">Login</span>
+      <span *ngIf="isLoading">Logging in...</span> <!-- Text feedback during load -->
+    </ion-button>
+    <ion-text class="error animate__animated" [ngClass]="{'animate__shakeX': error}" *ngIf="error">{{ error }}</ion-text>
   </div>
 </ion-content>

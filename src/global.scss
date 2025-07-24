@@ -1,37 +1,112 @@
 /*
- * App Global CSS
+ * App Global CSS for Deployment Agency App
  * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
+ * Global styles for the entire app, used to manage applicants for abroad deployment.
+ * Compatible with Angular 13, Ionic 6, Font Awesome, Animate.css, and PHP 8.1.33/Slim/SQL backend.
+ * Light design: Bright gradient, high contrast, increased spacing, logo styling.
  */
 
-/* Core CSS required for Ionic components to work properly */
+/* Core CSS required for Ionic components */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Optional CSS utils for applicant UI */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+/* Font Awesome for icons (e.g., user, lock for applicant login) */
+@import "~@fortawesome/fontawesome-free/css/all.css";
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* Animate.css for animations (e.g., fadeIn for form entry) */
+@import "~animate.css/animate.min.css";
+
+/* Custom light styles for Deployment Agency App login page */
+ion-content {
+  --background: linear-gradient(135deg, #f6f9fc, #e9f0f7); /* Light, bright gradient */
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+}
+
+ion-item {
+  --border-radius: 12px;
+  --padding-start: 24px;
+  --padding-end: 24px;
+  --margin-bottom: 40px; /* Prevents username/password overlap */
+  --background: #ffffff;
+  --color: #222222;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+ion-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-label {
+  font-weight: 700;
+  font-size: 16px;
+  color: #444444;
+  margin-bottom: 16px;
+}
+
+ion-input {
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+  font-size: 20px;
+  --placeholder-color: #bbbbbb;
+}
+
+ion-icon.fa {
+  font-size: 24px;
+  margin-right: 16px;
+  color: #6c757d; /* Muted gray for contrast */
+}
+
+ion-button {
+  --border-radius: 12px;
+  --background: #428cff; /* Vibrant blue button */
+  --color: #ffffff;
+  --padding-top: 22px;
+  --padding-bottom: 22px;
+  margin-top: 48px;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+ion-button:hover {
+  --background: #3a7be0;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(66, 140, 255, 0.2);
+}
+
+ion-text.error {
+  display: block;
+  text-align: center;
+  margin-top: 28px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #d9534f;
+}
+
+/* Animation for login form entry */
+.login-container {
+  animation: fadeInUp 1.2s ease-in-out;
+}
+
+/* Logo styling for iweb */
+.logo {
+  display: block;
+  margin: 40px auto 32px auto; /* Centered with spacing above/below */
+  width: 150px; /* Reasonable size for visibility */
+  max-width: 80%; /* Responsive for smaller screens */
+  height: auto;
+}
