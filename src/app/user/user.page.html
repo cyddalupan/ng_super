@@ -18,7 +18,7 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="deleteUser(user.id!)"> <!-- Add ! for non-null -->
+        <ion-item-option color="danger" (click)="deleteUser(user.id)">
           Delete
         </ion-item-option>
       </ion-item-options>
@@ -34,7 +34,8 @@
           </ion-buttons>
           <ion-title>{{ isEdit ? 'Edit User' : 'Create User' }}</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="saveUser()" strong="true">Save</ion-button>
+            <ion-button (click)="saveUser()" strong="true" [disabled]="isSaving">Save</ion-button>
+            <!-- Disable during save -->
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -70,3 +71,6 @@
     </ng-template>
   </ion-modal>
 </ion-content>
+
+<ion-loading [isOpen]="isSaving" message="Saving user..." [duration]="0" spinner="crescent"
+  (didDismiss)="isSaving = false"></ion-loading>

@@ -5,36 +5,32 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class AgencyService {
   private apiUrl = '/api/'; // Proxy to backend
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}login`, credentials);
-  }
-
-  getUsers(): Observable<any> {
+  getAgencies(): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    return this.http.get(`${this.apiUrl}users`, { headers });
+    return this.http.get(`${this.apiUrl}agencies`, { headers });
   }
 
-  createUser(user: any): Observable<any> {
+  createAgency(agency: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    return this.http.post(`${this.apiUrl}users`, user, { headers });
+    return this.http.post(`${this.apiUrl}agencies`, agency, { headers });
   }
 
-  updateUser(id: number, user: any): Observable<any> {
+  updateAgency(id: number, agency: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    return this.http.put(`${this.apiUrl}users/${id}`, user, { headers });
+    return this.http.put(`${this.apiUrl}agencies/${id}`, agency, { headers });
   }
 
-  deleteUser(id: number): Observable<any> {
+  deleteAgency(id: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    return this.http.delete(`${this.apiUrl}users/${id}`, { headers });
+    return this.http.delete(`${this.apiUrl}agencies/${id}`, { headers });
   }
 }
