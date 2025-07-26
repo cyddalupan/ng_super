@@ -1,15 +1,72 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button> <!-- Add sidebar navigation -->
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>User</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-button expand="block" (click)="openModal(false)">Create New User</ion-button>
   <ion-list>
-    <!-- Future: *ngFor for users with agency_id -->
-    <ion-item>User 1</ion-item>
+    <ion-item-sliding *ngFor="let user of users">
+      <ion-item (click)="openModal(true, user)">
+        <ion-label>
+          <h2>{{ user.username }}</h2>
+          <p>{{ user.email }} | Type: {{ user.user_type }} | Agency ID: {{ user.agency_id || 'None' }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteUser(user.id!)"> <!-- Add ! for non-null -->
+          Delete
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="closeModal()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>{{ isEdit ? 'Edit User' : 'Create User' }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="saveUser()" strong="true">Save</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Username</ion-label>
+          <ion-input [(ngModel)]="selectedUser.username"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!isEdit">
+          <ion-label position="stacked">Password</ion-label>
+          <ion-input type="password" [(ngModel)]="selectedUser.password"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input [(ngModel)]="selectedUser.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">User Type</ion-label>
+          <ion-select [(ngModel)]="selectedUser.user_type">
+            <ion-select-option value="superuser">Superuser</ion-select-option>
+            <ion-select-option value="agency_manager">Agency Manager</ion-select-option>
+            <ion-select-option value="applicant">Applicant</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Agency ID (optional)</ion-label>
+          <ion-select [(ngModel)]="selectedUser.agency_id" placeholder="Select Agency">
+            <ion-select-option [value]="null">None</ion-select-option>
+            <ion-select-option *ngFor="let agency of agencies" [value]="agency.id">{{ agency.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
