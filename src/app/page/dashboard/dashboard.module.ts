@@ -2,17 +2,15 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { HomePage } from './home.page';
-import { HomePageRoutingModule } from './home-routing.module';
+import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,  // Enables ion-loading and bindings like [isOpen], [duration]
-    HomePageRoutingModule
+    IonicModule, 
   ],
-  declarations: [HomePage],
+  declarations: [DashboardComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomePageModule {}
+export class DashboardPageModule {}

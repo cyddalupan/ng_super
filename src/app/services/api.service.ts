@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://isuper.reviewcenterphil.com/api/';  // Your Slim API
+  private apiUrl = '/api/'; // Use proxy for CORS bypass in dev
 
   constructor(private http: HttpClient) {}
 
@@ -15,8 +15,8 @@ export class ApiService {
   }
 
   getAgencies(): Observable<any> {
-    return this.http.get(`${this.apiUrl}agencies`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    return this.http.get(`${this.apiUrl}agencies`, { headers });
   }
 }

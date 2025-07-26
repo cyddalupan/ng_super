@@ -16,3 +16,13 @@ ion-button {
   align-items: center;
   justify-content: center; /* Center spinner and text during load */
 }
+
+.login-container {
+  max-width: 400px; /* Limit width for desktop, good for older/younger users */
+  margin: 0 auto; /* Center on larger screens */
+  padding: 20px; /* Extra padding for spacing */
+  background: rgba(255, 255, 255, 0.8); /* Light background for form */
+  border-radius: 16px; /* Rounded for modern look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  animation: fadeInUp 1s ease-in-out; /* Keep animation */
+}

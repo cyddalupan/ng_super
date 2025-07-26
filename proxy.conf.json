@@ -1,7 +1,11 @@
 {
-  "/api": {
-    "target": "http://isuper.reviewcenterphil.com/api",
-    "secure": false,
-    "changeOrigin": true
+  "/api/*": {
+    "target": "https://isuper.reviewcenterphil.com/api",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "logLevel": "debug"
   }
 }
