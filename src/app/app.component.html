@@ -1,3 +1,40 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/dashboard" routerDirection="root" lines="none">
+            <ion-icon name="home" slot="start"></ion-icon>
+            <ion-label>Dashboard</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/user" routerDirection="root" lines="none">
+            <ion-icon name="people" slot="start"></ion-icon>
+            <ion-label>User</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/agency" routerDirection="root" lines="none">
+            <ion-icon name="business" slot="start"></ion-icon>
+            <ion-label>Agency</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item-divider></ion-item-divider> <!-- Space for logout -->
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="authService.logout()" lines="none" class="logout-item">
+            <ion-icon name="log-out" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
-import { Router } from '@angular/router'; // Ensure this is imported
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ export class HomePage {
   userError: string = '';
   isLoading: boolean = false;
 
-  constructor(private apiService: ApiService, private alertService: AlertService, private router: Router) {} // Ensure Router injected
+  constructor(private apiService: ApiService, private alertService: AlertService, private router: Router) {}
 
   async login() {
     this.userError = '';
@@ -28,7 +28,7 @@ export class HomePage {
         localStorage.setItem('token', res.token); // Store JWT for agency/user CRUD
         this.isLoading = false; // Hide loading
         await this.alertService.showSuccess('Login successful');
-        this.router.navigate(['/dashboard']); // Navigate to dashboard
+        this.router.navigate(['/dashboard'], { replaceUrl: true }); // Navigate with replaceUrl to replace history
       },
       error: async (err) => {
         this.isLoading = false; // Hide loading

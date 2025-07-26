@@ -1,0 +1,33 @@
+ion-menu {
+  --width: 280px; /* Sidebar width for many navigation items */
+  --background: #f4f5f8; /* Light background */
+}
+
+ion-menu ion-item {
+  --background: transparent;
+  --color: #333;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --border-color: transparent;
+}
+
+ion-menu ion-item:hover {
+  --background: #e0e0e0; /* Hover for interactivity */
+}
+
+ion-menu {
+  --width: 280px; /* Sidebar width for many navigation items */
+  --background: #f4f5f8; /* Light background */
+}
+
+ion-menu ion-item {
+  --background: transparent;
+  --color: #333;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --border-color: transparent;
+}
+
+ion-menu ion-item:hover {
+  --background: #e0e0e0; /* Hover for interactivity */
+}
