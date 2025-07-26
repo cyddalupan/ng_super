@@ -10,10 +10,10 @@ import { Router } from '@angular/router'; // Ensure this is imported
 })
 export class HomePage {
   credentials: { username: string; password: string } = { username: '', password: '' };
-  userError: string = ''; // For in-app user message
+  userError: string = '';
   isLoading: boolean = false;
 
-  constructor(private apiService: ApiService, private alertService: AlertService, private router: Router) {} // Ensure Router is injected
+  constructor(private apiService: ApiService, private alertService: AlertService, private router: Router) {} // Ensure Router injected
 
   async login() {
     this.userError = '';
@@ -28,8 +28,7 @@ export class HomePage {
         localStorage.setItem('token', res.token); // Store JWT for agency/user CRUD
         this.isLoading = false; // Hide loading
         await this.alertService.showSuccess('Login successful');
-        console.log('Redirecting to dashboard...'); // Debug to confirm next triggers
-        this.router.navigate(['/dashboard']); // Redirect to dashboard
+        this.router.navigate(['/dashboard']); // Navigate to dashboard
       },
       error: async (err) => {
         this.isLoading = false; // Hide loading
