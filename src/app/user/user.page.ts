@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import { AgencyService } from '../services/agency.service';
 import { AlertController, ModalController } from '@ionic/angular';
-import { AlertService } from '../services/alert.service'; // Add for error/success toast
+import { AlertService } from '../services/alert.service';
+import { AuthService } from '../services/auth.service';
 
 interface User {
   id?: number;
   username: string;
-  password?: string; // Optional for update
+  password?: string;
   email: string;
   user_type: string;
   agency_id: number | null;
@@ -23,28 +25,66 @@ export class UserPage implements OnInit {
   selectedUser: User = { username: '', password: '', email: '', user_type: 'applicant', agency_id: null };
   isModalOpen = false;
   isEdit = false;
-  isSaving = false; // For loading indicator and button disable
+  isSaving = false;
+  isLoading = false;
 
   @ViewChild('modal') modal: any;
 
-  constructor(private apiService: ApiService, private alertController: AlertController, private modalController: ModalController, private alertService: AlertService) {} // Add AlertService
+  constructor(
+    private apiService: ApiService,
+    private agencyService: AgencyService,
+    private alertController: AlertController,
+    private modalController: ModalController,
+    private alertService: AlertService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
+    this.loadAgencies();
   }
 
   loadUsers() {
+    this.isLoading = true;
     this.apiService.getUsers().subscribe({
-      next: (res: User[]) => {
-        this.users = res; // Array from /api/users with agency_id filtering from JWT
+      next: (res) => {
+        this.users = res;
+        this.isLoading = false;
       },
-      error: (err: any) => {
-        console.error('Error loading users', err);
+      error: async (err) => {
+        if (err.status === 401) {
+          await this.authService.logout();
+        } else {
+          await this.alertService.showError('Error loading users', err);
+        }
+        this.isLoading = false;
+      }
+    });
+  }
+
+  loadAgencies() {
+    this.agencyService.getAgencies().subscribe({
+      next: (res) => {
+        console.log('Agencies loaded:', res); // Debug log
+        this.agencies = res || []; // Ensure array, even if empty
+      },
+      error: async (err) => {
+        console.error('Error loading agencies:', err); // Debug log
+        if (err.status === 401) {
+          await this.authService.logout();
+        } else {
+          await this.alertService.showError('Error loading agencies', err);
+        }
+        this.agencies = []; // Clear on error
       }
     });
   }
 
   openModal(edit = false, user: User | null = null) {
+    if (this.agencies.length === 0) {
+      console.log('No agencies, retrying loadAgencies'); // Debug log
+      this.loadAgencies(); // Retry if agencies not loaded
+    }
     this.isEdit = edit;
     this.selectedUser = edit && user ? { ...user } : { username: '', password: '', email: '', user_type: 'applicant', agency_id: null };
     this.isModalOpen = true;
@@ -55,38 +95,46 @@ export class UserPage implements OnInit {
   }
 
   async saveUser() {
-    this.isSaving = true; // Start loading, disable button
+    this.isSaving = true;
     if (this.isEdit && this.selectedUser.id) {
       this.apiService.updateUser(this.selectedUser.id, this.selectedUser).subscribe({
-        next: async (res: any) => {
+        next: async (res) => {
           await this.alertService.showSuccess('User updated');
           this.loadUsers();
           this.closeModal();
-          this.isSaving = false; // End loading
+          this.isSaving = false;
         },
-        error: async (err: any) => {
-          await this.alertService.showError('Error updating user', err);
-          this.isSaving = false; // End loading
+        error: async (err) => {
+          if (err.status === 401) {
+            await this.authService.logout();
+          } else {
+            await this.alertService.showError('Error updating user', err);
+          }
+          this.isSaving = false;
         }
       });
     } else {
       this.apiService.createUser(this.selectedUser).subscribe({
-        next: async (res: any) => {
+        next: async (res) => {
           await this.alertService.showSuccess('User created');
           this.loadUsers();
           this.closeModal();
-          this.isSaving = false; // End loading
+          this.isSaving = false;
         },
-        error: async (err: any) => {
-          await this.alertService.showError('Error creating user', err);
-          this.isSaving = false; // End loading
+        error: async (err) => {
+          if (err.status === 401) {
+            await this.authService.logout();
+          } else {
+            await this.alertService.showError('Error creating user', err);
+          }
+          this.isSaving = false;
         }
       });
     }
   }
 
   async deleteUser(id: number | undefined) {
-    if (id === undefined) return; // Guard for undefined id
+    if (id === undefined) return;
 
     const alert = await this.alertController.create({
       header: 'Confirm Delete',
@@ -100,11 +148,15 @@ export class UserPage implements OnInit {
           text: 'Delete',
           handler: () => {
             this.apiService.deleteUser(id).subscribe({
-              next: (res: any) => {
+              next: (res) => {
                 this.loadUsers();
               },
-              error: (err: any) => {
-                console.error('Error deleting user', err);
+              error: async (err) => {
+                if (err.status === 401) {
+                  await this.authService.logout();
+                } else {
+                  await this.alertService.showError('Error deleting user', err);
+                }
               }
             });
           }

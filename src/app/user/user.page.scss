@@ -1,1 +1,118 @@
-/* Styles for user page (e.g., ion-list with agency_id) */
+.header-row {
+  font-weight: bold;
+  background-color: #f4f5f8;
+  border-bottom: 1px solid #ddd;
+}
+
+ion-col {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 8px;
+}
+
+.fa {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.action-icon {
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.action-icon:hover {
+  animation: pulse 0.5s; /* Animate.css pulse on hover */
+}
+
+.fa-edit {
+  color: #428cff; /* Blue for edit */
+}
+
+.fa-trash {
+  color: #ff4961; /* Red for delete */
+}
+
+.create-button {
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .create-button {
+    max-width: 300px;
+    margin: 0 auto 16px auto;
+  }
+}
+
+/* Modal styles */
+.user-modal {
+  --background: #ffffff;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --border-radius: 8px;
+  --max-width: 600px; /* Center in web view */
+  margin: auto; /* Center horizontally */
+}
+
+.modal-header {
+  --background: linear-gradient(135deg, #428cff, #6b7280); /* Gradient header */
+  --color: #ffffff;
+}
+
+.modal-button {
+  --border-radius: 20px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  margin: 0 8px;
+}
+
+.modal-content {
+  --background: #f9fafb; /* Light background for form */
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.modal-item {
+  --background: #ffffff;
+  --border-color: #ddd;
+  --border-width: 0 0 1px 0;
+  margin-bottom: 16px; /* Spacing between inputs */
+  padding: 8px 0;
+}
+
+/* Loading overlay styles */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loading-spinner .fa-spinner {
+  font-size: 24px;
+  color: #428cff; /* Match theme */
+}
+
+.loading-spinner span {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Page load animation */
+.page-content {
+  animation-duration: 0.5s; /* Smooth fade-in */
+}
