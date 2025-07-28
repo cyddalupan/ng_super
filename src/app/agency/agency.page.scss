@@ -14,7 +14,15 @@ ion-col {
 .fa {
   font-size: 18px;
   margin-right: 8px;
+}
+
+.action-icon {
+  margin-right: 16px;
   cursor: pointer;
+}
+
+.action-icon:hover {
+  animation: pulse 0.5s; /* Animate.css pulse on hover */
 }
 
 .fa-edit {
@@ -26,12 +34,12 @@ ion-col {
 }
 
 .create-button {
-  margin-bottom: 16px; // Spacing in desktop
+  margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {
   .create-button {
-    max-width: 300px; // Smaller in web view
-    margin: 0 auto 16px auto; // Center in web
+    max-width: 300px;
+    margin: 0 auto 16px auto;
   }
 }
