@@ -22,6 +22,7 @@ export class AgencyPage implements OnInit {
   isModalOpen = false;
   isEdit = false;
   isSaving = false;
+  isLoading = false; // Add for loading agencies
 
   @ViewChild('modal') modal: any;
 
@@ -37,12 +38,15 @@ export class AgencyPage implements OnInit {
   }
 
   loadAgencies() {
+    this.isLoading = true; // Start loading
     this.agencyService.getAgencies().subscribe({
       next: (res) => {
         this.agencies = res; // Array from /api/agencies with agency_id NULL for superuser
+        this.isLoading = false; // End loading
       },
       error: async (err) => {
         await this.alertService.showError('Error loading agencies', err);
+        this.isLoading = false; // End loading
       }
     });
   }

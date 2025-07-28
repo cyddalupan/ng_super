@@ -71,7 +71,40 @@ ion-col {
   --padding-end: 16px;
 }
 
-ion-icon {
-  font-size: 20px;
-  color: #428cff; /* Match icon color with theme */
+/* Loading overlay styles */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loading-spinner .fa-spinner {
+  font-size: 24px;
+  color: #428cff; /* Match theme */
+}
+
+.loading-spinner span {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Page load animation */
+.page-content {
+  animation-duration: 0.5s; /* Smooth fade-in */
 }

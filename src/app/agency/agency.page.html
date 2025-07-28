@@ -8,73 +8,81 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button expand="block" (click)="openModal(false)" class="create-button animate__animated animate__bounceIn">
-    <i class="fas fa-plus-circle"></i> Create New Agency
-  </ion-button>
-  <ion-grid class="animate__animated animate__fadeIn">
-    <ion-row class="header-row">
-      <ion-col size="3"><i class="fas fa-building"></i> Name</ion-col>
-      <ion-col size="3"><i class="fas fa-map-marker-alt"></i> Address</ion-col>
-      <ion-col size="3"><i class="fas fa-envelope"></i> Email</ion-col>
-      <ion-col size="2"><i class="fas fa-phone"></i> Phone</ion-col>
-      <ion-col size="1"><i class="fas fa-cogs"></i> Actions</ion-col>
-    </ion-row>
-    <ion-row *ngFor="let agency of agencies">
-      <ion-col size="3">{{ agency.name }}</ion-col>
-      <ion-col size="3">{{ agency.address }}</ion-col>
-      <ion-col size="3">{{ agency.contact_email }}</ion-col>
-      <ion-col size="2">{{ agency.contact_phone }}</ion-col>
-      <ion-col size="1">
-        <i class="fas fa-edit action-icon" (click)="openModal(true, agency)"></i>
-        <i class="fas fa-trash action-icon" (click)="deleteAgency(agency.id)"></i>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div class="page-content animate__animated animate__fadeIn"> <!-- Page load animation -->
+    <ion-button expand="block" (click)="openModal(false)" class="create-button animate__animated animate__bounceIn">
+      <i class="fas fa-plus-circle"></i> Create New Agency
+    </ion-button>
+    <ion-grid class="animate__animated animate__fadeIn">
+      <ion-row class="header-row">
+        <ion-col size="3"><i class="fas fa-building"></i> Name</ion-col>
+        <ion-col size="3"><i class="fas fa-map-marker-alt"></i> Address</ion-col>
+        <ion-col size="3"><i class="fas fa-envelope"></i> Email</ion-col>
+        <ion-col size="2"><i class="fas fa-phone"></i> Phone</ion-col>
+        <ion-col size="1"><i class="fas fa-cogs"></i> Actions</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let agency of agencies">
+        <ion-col size="3">{{ agency.name }}</ion-col>
+        <ion-col size="3">{{ agency.address }}</ion-col>
+        <ion-col size="3">{{ agency.contact_email }}</ion-col>
+        <ion-col size="2">{{ agency.contact_phone }}</ion-col>
+        <ion-col size="1">
+          <i class="fas fa-edit action-icon" (click)="openModal(true, agency)"></i>
+          <i class="fas fa-trash action-icon" (click)="deleteAgency(agency.id)"></i>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="agency-modal"> <!-- Removed Animate.css -->
-    <ng-template>
-      <ion-header>
-        <ion-toolbar class="modal-header">
-          <ion-buttons slot="start">
-            <ion-button (click)="closeModal()" class="modal-button">
-              <i class="fas fa-times"></i> Cancel
-            </ion-button>
-          </ion-buttons>
-          <ion-title>{{ isEdit ? 'Edit Agency' : 'Create Agency' }}</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="saveAgency()" class="modal-button" [disabled]="isSaving">
-              <i class="fas fa-save"></i> Save
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding modal-content">
-        <ion-item class="modal-item">
-          <ion-icon name="business" slot="start" class="fas fa-building"></ion-icon>
-          <ion-label position="floating">Name</ion-label> <!-- Revert to floating -->
-          <ion-input [(ngModel)]="selectedAgency.name"></ion-input>
-        </ion-item>
-        <br>
-        <ion-item class="modal-item">
-          <ion-icon name="location-outline" slot="start" class="fas fa-map-marker-alt"></ion-icon>
-          <ion-label position="floating">Address</ion-label> <!-- Revert to floating -->
-          <ion-input [(ngModel)]="selectedAgency.address"></ion-input>
-        </ion-item>
-        <br>
-        <ion-item class="modal-item">
-          <ion-icon name="mail-outline" slot="start" class="fas fa-envelope"></ion-icon>
-          <ion-label position="floating">Contact Email</ion-label> <!-- Revert to floating -->
-          <ion-input [(ngModel)]="selectedAgency.contact_email"></ion-input>
-        </ion-item>
-        <br>
-        <ion-item class="modal-item">
-          <ion-icon name="call-outline" slot="start" class="fas fa-phone"></ion-icon>
-          <ion-label position="floating">Contact Phone</ion-label> <!-- Revert to floating -->
-          <ion-input [(ngModel)]="selectedAgency.contact_phone"></ion-input>
-        </ion-item>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="agency-modal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar class="modal-header">
+            <ion-buttons slot="start">
+              <ion-button (click)="closeModal()" class="modal-button">
+                <i class="fas fa-times"></i> Cancel
+              </ion-button>
+            </ion-buttons>
+            <ion-title>{{ isEdit ? 'Edit Agency' : 'Create Agency' }}</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="saveAgency()" class="modal-button" [disabled]="isSaving">
+                <i class="fas fa-save"></i> Save
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding modal-content">
+          <ion-item class="modal-item">
+            <ion-icon name="business" slot="start" class="fas fa-building"></ion-icon>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input [(ngModel)]="selectedAgency.name"></ion-input>
+          </ion-item>
+          <br>
+          <ion-item class="modal-item">
+            <ion-icon name="location-outline" slot="start" class="fas fa-map-marker-alt"></ion-icon>
+            <ion-label position="floating">Address</ion-label>
+            <ion-input [(ngModel)]="selectedAgency.address"></ion-input>
+          </ion-item>
+          <br>
+          <ion-item class="modal-item">
+            <ion-icon name="mail-outline" slot="start" class="fas fa-envelope"></ion-icon>
+            <ion-label position="floating">Contact Email</ion-label>
+            <ion-input [(ngModel)]="selectedAgency.contact_email"></ion-input>
+          </ion-item>
+          <br>
+          <ion-item class="modal-item">
+            <ion-icon name="call-outline" slot="start" class="fas fa-phone"></ion-icon>
+            <ion-label position="floating">Contact Phone</ion-label>
+            <ion-input [(ngModel)]="selectedAgency.contact_phone"></ion-input>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <!-- Custom loading overlay -->
+  <div class="loading-overlay" *ngIf="isLoading || isSaving">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span>{{ isLoading ? 'Loading agencies...' : 'Saving agency...' }}</span>
+    </div>
+  </div>
 </ion-content>
-
-<ion-loading [isOpen]="isSaving" message="Saving agency..." [duration]="0" spinner="crescent" (didDismiss)="isSaving = false"></ion-loading>
