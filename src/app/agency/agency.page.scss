@@ -1,1 +1,37 @@
-/* Styles for agency page (e.g., ion-list with agency_id) */
+.header-row {
+  font-weight: bold;
+  background-color: #f4f5f8;
+  border-bottom: 1px solid #ddd;
+}
+
+ion-col {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 8px;
+}
+
+.fa {
+  font-size: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.fa-edit {
+  color: #428cff; /* Blue for edit */
+}
+
+.fa-trash {
+  color: #ff4961; /* Red for delete */
+}
+
+.create-button {
+  margin-bottom: 16px; // Spacing in desktop
+}
+
+@media (min-width: 768px) {
+  .create-button {
+    max-width: 300px; // Smaller in web view
+    margin: 0 auto 16px auto; // Center in web
+  }
+}
