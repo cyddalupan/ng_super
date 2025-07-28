@@ -43,3 +43,35 @@ ion-col {
     margin: 0 auto 16px auto;
   }
 }
+
+/* Modal styles */
+.agency-modal {
+  --background: #ffffff;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --border-radius: 8px;
+  --max-width: 600px; /* Center in web view */
+  margin: auto; /* Center horizontally */
+}
+
+.modal-header {
+  --background: linear-gradient(135deg, #428cff, #6b7280); /* Gradient header */
+  --color: #ffffff;
+}
+
+.modal-button {
+  --border-radius: 20px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  margin: 0 8px;
+}
+
+.modal-content {
+  --background: #f9fafb; /* Light background for form */
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+ion-icon {
+  font-size: 20px;
+  color: #428cff; /* Match icon color with theme */
+}

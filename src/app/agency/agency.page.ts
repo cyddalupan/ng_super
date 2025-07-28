@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgencyService } from '../services/agency.service';
 import { AlertController, ModalController } from '@ionic/angular';
-import { AlertService } from '../services/alert.service'; // Add for error/success toast
+import { AlertService } from '../services/alert.service';
 
 interface Agency {
   id?: number;
@@ -21,11 +21,16 @@ export class AgencyPage implements OnInit {
   selectedAgency: Agency = { name: '', address: '', contact_email: '', contact_phone: '' };
   isModalOpen = false;
   isEdit = false;
-  isSaving = false; // For loading indicator and button disable
+  isSaving = false;
 
   @ViewChild('modal') modal: any;
 
-  constructor(private agencyService: AgencyService, private alertController: AlertController, private modalController: ModalController, private alertService: AlertService) {} // Add AlertService
+  constructor(
+    private agencyService: AgencyService,
+    private alertController: AlertController,
+    private modalController: ModalController,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit() {
     this.loadAgencies();
@@ -36,8 +41,8 @@ export class AgencyPage implements OnInit {
       next: (res) => {
         this.agencies = res; // Array from /api/agencies with agency_id NULL for superuser
       },
-      error: (err) => {
-        console.error('Error loading agencies', err);
+      error: async (err) => {
+        await this.alertService.showError('Error loading agencies', err);
       }
     });
   }
@@ -101,8 +106,8 @@ export class AgencyPage implements OnInit {
               next: (res) => {
                 this.loadAgencies();
               },
-              error: (err) => {
-                console.error('Error deleting agency', err);
+              error: async (err) => {
+                await this.alertService.showError('Error deleting agency', err);
               }
             });
           }
