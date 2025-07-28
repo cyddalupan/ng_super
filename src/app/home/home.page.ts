@@ -13,7 +13,11 @@ export class HomePage {
   userError: string = '';
   isLoading: boolean = false;
 
-  constructor(private apiService: ApiService, private alertService: AlertService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private alertService: AlertService,
+    private router: Router
+  ) {}
 
   async login() {
     this.userError = '';
@@ -22,16 +26,16 @@ export class HomePage {
       return;
     }
 
-    this.isLoading = true; // Show loading
+    this.isLoading = true; // Start loading
     this.apiService.login(this.credentials).subscribe({
       next: async (res) => {
         localStorage.setItem('token', res.token); // Store JWT for agency/user CRUD
-        this.isLoading = false; // Hide loading
+        this.isLoading = false; // End loading
         await this.alertService.showSuccess('Login successful');
-        this.router.navigate(['/dashboard'], { replaceUrl: true }); // Navigate with replaceUrl to replace history
+        this.router.navigate(['/dashboard'], { replaceUrl: true }); // Navigate with replaceUrl
       },
       error: async (err) => {
-        this.isLoading = false; // Hide loading
+        this.isLoading = false; // End loading
         if (err.status === 401) {
           this.userError = 'Invalid username or password.'; // In-app for user message
         } else {

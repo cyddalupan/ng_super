@@ -24,6 +24,12 @@
     </ion-button>
     <ion-text class="error animate__animated" [ngClass]="{'animate__shakeX': userError}" *ngIf="userError">{{ userError }}</ion-text> <!-- In-app user message -->
   </div>
-</ion-content>
 
-<ion-loading [isOpen]="isLoading" message="Logging in..." [duration]="0" spinner="crescent" (didDismiss)="isLoading = false"></ion-loading>
+  <!-- Custom loading overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span>Logging in...</span>
+    </div>
+  </div>
+</ion-content>
