@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AgencyService } from '../services/agency.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { AlertService } from '../services/alert.service';
+import { AuthService } from '../services/auth.service';
 
 interface Agency {
   id?: number;
@@ -22,7 +23,8 @@ export class AgencyPage implements OnInit {
   isModalOpen = false;
   isEdit = false;
   isSaving = false;
-  isLoading = false; // Add for loading agencies
+  isTableLoading = false; // For table load
+  isButtonLoading = false; // For create button
 
   @ViewChild('modal') modal: any;
 
@@ -30,7 +32,8 @@ export class AgencyPage implements OnInit {
     private agencyService: AgencyService,
     private alertController: AlertController,
     private modalController: ModalController,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -38,15 +41,19 @@ export class AgencyPage implements OnInit {
   }
 
   loadAgencies() {
-    this.isLoading = true; // Start loading
+    this.isTableLoading = true; // Start table loading
     this.agencyService.getAgencies().subscribe({
       next: (res) => {
-        this.agencies = res; // Array from /api/agencies with agency_id NULL for superuser
-        this.isLoading = false; // End loading
+        this.agencies = res;
+        this.isTableLoading = false; // End table loading
       },
       error: async (err) => {
-        await this.alertService.showError('Error loading agencies', err);
-        this.isLoading = false; // End loading
+        if (err.status === 401) {
+          await this.authService.logout();
+        } else {
+          await this.alertService.showError('Error loading agencies', err);
+        }
+        this.isTableLoading = false; // End table loading
       }
     });
   }
@@ -62,38 +69,49 @@ export class AgencyPage implements OnInit {
   }
 
   async saveAgency() {
-    this.isSaving = true; // Start loading, disable button
+    this.isSaving = true; // Start saving
     if (this.isEdit && this.selectedAgency.id) {
       this.agencyService.updateAgency(this.selectedAgency.id, this.selectedAgency).subscribe({
         next: async (res) => {
           await this.alertService.showSuccess('Agency updated');
           this.loadAgencies();
           this.closeModal();
-          this.isSaving = false; // End loading
+          this.isSaving = false; // End saving
         },
         error: async (err) => {
-          await this.alertService.showError('Error updating agency', err);
-          this.isSaving = false; // End loading
+          if (err.status === 401) {
+            await this.authService.logout();
+          } else {
+            await this.alertService.showError('Error updating agency', err);
+          }
+          this.isSaving = false; // End saving
         }
       });
     } else {
+      this.isButtonLoading = true; // Start button loading for create
       this.agencyService.createAgency(this.selectedAgency).subscribe({
         next: async (res) => {
           await this.alertService.showSuccess('Agency created');
           this.loadAgencies();
           this.closeModal();
-          this.isSaving = false; // End loading
+          this.isSaving = false;
+          this.isButtonLoading = false; // End button loading
         },
         error: async (err) => {
-          await this.alertService.showError('Error creating agency', err);
-          this.isSaving = false; // End loading
+          if (err.status === 401) {
+            await this.authService.logout();
+          } else {
+            await this.alertService.showError('Error creating agency', err);
+          }
+          this.isSaving = false;
+          this.isButtonLoading = false; // End button loading
         }
       });
     }
   }
 
   async deleteAgency(id: number | undefined) {
-    if (id === undefined) return; // Guard for undefined id
+    if (id === undefined) return;
 
     const alert = await this.alertController.create({
       header: 'Confirm Delete',
@@ -111,7 +129,11 @@ export class AgencyPage implements OnInit {
                 this.loadAgencies();
               },
               error: async (err) => {
-                await this.alertService.showError('Error deleting agency', err);
+                if (err.status === 401) {
+                  await this.authService.logout();
+                } else {
+                  await this.alertService.showError('Error deleting agency', err);
+                }
               }
             });
           }

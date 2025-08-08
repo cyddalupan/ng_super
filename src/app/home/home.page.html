@@ -19,17 +19,10 @@
       <ion-input type="password" [(ngModel)]="credentials.password" placeholder="Enter password"></ion-input>
     </ion-item>
     <ion-button expand="block" (click)="login()" [disabled]="isLoading">
-      <ion-icon name="log-in-outline" slot="start" class="fa fa-sign-in-alt"></ion-icon>
-      Login
+      <ion-icon *ngIf="!isLoading" name="log-in-outline" slot="start" class="fa fa-sign-in-alt"></ion-icon>
+      <ion-icon *ngIf="isLoading" name="loading" slot="start" class="fas fa-spinner fa-spin"></ion-icon> <!-- Inline spinner -->
+      {{ isLoading ? 'Logging in...' : 'Login' }}
     </ion-button>
-    <ion-text class="error animate__animated" [ngClass]="{'animate__shakeX': userError}" *ngIf="userError">{{ userError }}</ion-text> <!-- In-app user message -->
-  </div>
-
-  <!-- Custom loading overlay -->
-  <div class="loading-overlay" *ngIf="isLoading">
-    <div class="loading-spinner">
-      <i class="fas fa-spinner fa-spin"></i>
-      <span>Logging in...</span>
-    </div>
+    <ion-text class="error animate__animated" [ngClass]="{'animate__shakeX': userError}" *ngIf="userError">{{ userError }}</ion-text>
   </div>
 </ion-content>

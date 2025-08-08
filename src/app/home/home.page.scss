@@ -6,15 +6,16 @@
   height: auto;
 }
 
-.loading-spinner {
-  margin-right: 12px; /* Space from text */
-  --color: #ffffff; /* White for contrast on button blue */
-}
-
 ion-button {
   display: flex;
   align-items: center;
   justify-content: center; /* Center spinner and text during load */
+}
+
+ion-button ion-icon {
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 18px;
+  color: #ffffff; /* White for contrast on button blue */
 }
 
 .login-container {
@@ -25,37 +26,4 @@ ion-button {
   border-radius: 16px; /* Rounded for modern look */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   animation: fadeInUp 1s ease-in-out; /* Keep animation */
-}
-
-/* Loading overlay styles */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.loading-spinner {
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.loading-spinner .fa-spinner {
-  font-size: 24px;
-  color: #428cff; /* Match theme */
-}
-
-.loading-spinner span {
-  font-size: 16px;
-  color: #333;
 }

@@ -26,7 +26,8 @@ export class UserPage implements OnInit {
   isModalOpen = false;
   isEdit = false;
   isSaving = false;
-  isLoading = false;
+  isTableLoading = false;
+  isButtonLoading = false;
 
   @ViewChild('modal') modal: any;
 
@@ -45,11 +46,11 @@ export class UserPage implements OnInit {
   }
 
   loadUsers() {
-    this.isLoading = true;
+    this.isTableLoading = true;
     this.apiService.getUsers().subscribe({
       next: (res) => {
         this.users = res;
-        this.isLoading = false;
+        this.isTableLoading = false;
       },
       error: async (err) => {
         if (err.status === 401) {
@@ -57,7 +58,7 @@ export class UserPage implements OnInit {
         } else {
           await this.alertService.showError('Error loading users', err);
         }
-        this.isLoading = false;
+        this.isTableLoading = false;
       }
     });
   }
@@ -65,25 +66,31 @@ export class UserPage implements OnInit {
   loadAgencies() {
     this.agencyService.getAgencies().subscribe({
       next: (res) => {
-        console.log('Agencies loaded:', res); // Debug log
-        this.agencies = res || []; // Ensure array, even if empty
+        console.log('Agencies loaded:', res);
+        this.agencies = res || [];
       },
       error: async (err) => {
-        console.error('Error loading agencies:', err); // Debug log
+        console.error('Error loading agencies:', err);
         if (err.status === 401) {
           await this.authService.logout();
         } else {
           await this.alertService.showError('Error loading agencies', err);
         }
-        this.agencies = []; // Clear on error
+        this.agencies = [];
       }
     });
   }
 
+  getAgencyName(agencyId: number | null): string {
+    if (!agencyId) return 'None';
+    const agency = this.agencies.find(a => a.id === agencyId);
+    return agency ? agency.name : 'None';
+  }
+
   openModal(edit = false, user: User | null = null) {
     if (this.agencies.length === 0) {
-      console.log('No agencies, retrying loadAgencies'); // Debug log
-      this.loadAgencies(); // Retry if agencies not loaded
+      console.log('No agencies, retrying loadAgencies');
+      this.loadAgencies();
     }
     this.isEdit = edit;
     this.selectedUser = edit && user ? { ...user } : { username: '', password: '', email: '', user_type: 'applicant', agency_id: null };
@@ -114,12 +121,14 @@ export class UserPage implements OnInit {
         }
       });
     } else {
+      this.isButtonLoading = true;
       this.apiService.createUser(this.selectedUser).subscribe({
         next: async (res) => {
           await this.alertService.showSuccess('User created');
           this.loadUsers();
           this.closeModal();
           this.isSaving = false;
+          this.isButtonLoading = false;
         },
         error: async (err) => {
           if (err.status === 401) {
@@ -128,6 +137,7 @@ export class UserPage implements OnInit {
             await this.alertService.showError('Error creating user', err);
           }
           this.isSaving = false;
+          this.isButtonLoading = false;
         }
       });
     }
